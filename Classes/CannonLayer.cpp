@@ -14,7 +14,7 @@ bool CannonLayer::init()
 	{
 		return false;
 	}
-	_weapon = Weapon::create((CannonType)0);
+	_weapon = Weapon::create(k_Cannon_Invalid);
 	addChild(_weapon,1);
 	CCSize winSize=CCDirector::sharedDirector()->getWinSize();
 	_weapon->setPosition(ccp(winSize.width/2 - 18, 0));
@@ -22,12 +22,12 @@ bool CannonLayer::init()
 	_addMenuItem = CCMenuItemImage::create(
 		"ui_button_65-ipadhd.png",
 		"ui_button_65-ipadhd.png",
-		this,menu_selector(CannonLayer::switchCannonCallback));
+		this,menu_selector(CannonLayer::onSwitchCannon));
 
 	_subMenuItem = CCMenuItemImage::create(
 		"ui_button_63-ipadhd.png",
 		"ui_button_63-ipadhd.png",
-		this,menu_selector(CannonLayer::switchCannonCallback));
+		this,menu_selector(CannonLayer::onSwitchCannon));
 
 	CCMenu* menu = CCMenu::create(_subMenuItem, _addMenuItem, NULL);
 	menu->alignItemsHorizontallyWithPadding(120);
@@ -45,4 +45,14 @@ void CannonLayer::onSwitchCannon(cocos2d::CCObject* sender)
 	}
 	_weapon->changeCannon(operate);
 
+}
+
+void CannonLayer::aimAt(CCPoint target)
+{
+	_weapon->aimAt(target);
+}
+
+void CannonLayer::shootTo(CCPoint target)
+{
+	_weapon->shootTo(target);
 }
